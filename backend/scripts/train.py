@@ -27,7 +27,7 @@ TEXT_COLUMNS = ["text", "body", "email", "content", "message"]
 LABEL_COLUMNS = ["label", "is_phishing", "target", "class", "category"]
 
 
-def _resolve_columns(df: pd.DataFrame) -> tuple[str, str]:
+def _resolve_columns(df: pd.DataFrame) -> tuple[str, str]:\n    \"\"\"Detect text and label columns from DataFrame.\n    \n    Searches for common column name variations to identify text inputs and labels.\n    \"\"\""}}]
     text_col = next((c for c in TEXT_COLUMNS if c in df.columns), None)
     label_col = next((c for c in LABEL_COLUMNS if c in df.columns), None)
     if not text_col or not label_col:
@@ -72,7 +72,7 @@ def _get_feature_names(pipeline: Pipeline) -> list[str]:
     return names
 
 
-def _evaluate(y_true, y_pred, y_proba) -> dict:
+def _evaluate(y_true: np.ndarray, y_pred: np.ndarray, y_proba: np.ndarray) -> dict:\n    \"\"\"Compute comprehensive evaluation metrics for model performance.\"\"\""}}]
     return {
         "accuracy": float(accuracy_score(y_true, y_pred)),
         "precision": float(precision_score(y_true, y_pred)),

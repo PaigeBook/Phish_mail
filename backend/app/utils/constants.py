@@ -1,3 +1,4 @@
+\"\"\"Constants for phishing detection thresholds and labels.\"\"\"
 RISK_LOW_MAX = 0.4
 RISK_MED_MAX = 0.7
 PHISHING_LABEL = "phishing"

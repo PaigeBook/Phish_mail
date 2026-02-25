@@ -27,39 +27,35 @@ Ingestion -> Cleaning -> Feature extraction (TF-IDF + engineered features) -> Tr
 ## Model comparison results
 The training script outputs metrics for Logistic Regression and Random Forest, then selects the best by F1 score.
 
-## API contract
-POST /api/predict
-Request JSON:
-{
-	"body": "...",
-	"headers": "..."
-}
-Response JSON:
-{
-	"prediction": "phishing",
-	"confidence": 0.92,
-	"risk_level": "High",
-	"explanation": {
-		"reasons": ["..."],
-		"top_features": [{"feature": "", "contribution": 0.1}],
-		"suspicious_terms": ["urgent"],
-		"stats": {"phishing_score": 0.92}
-	}
-}
+## API Endpoints
+
+### GET /api/health
+Health check with model metadata.
+
+### POST /api/predict
+Predict phishing for a single email.
+
+### POST /api/predict-batch
+Predict phishing for multiple emails (max 1000 per batch).
 
 ## Explainability
-- Top contributing features for linear models.
-- Suspicious term highlighting for UI.
-- Optional SHAP hooks for tree models.
+- Top contributing features from linear models.
+- Suspicious term highlighting in UI.
+- Optional SHAP feature importance for tree models.
+- Structured explanation with reasoning and statistics.
 
 ## Security considerations
 - Input validation with Pydantic and Zod.
 - Minimal error leakage in API responses.
 - Clear separation of training and inference assets.
 
-## Performance considerations
-- Joblib model loading with caching on startup.
-- Vectorized feature extraction.
+## Performance & Reliability
+- Joblib model loading with LRU caching on startup.
+- Vectorized feature extraction with numpy.
+- Structured logging for all requests and errors.
+- Batch prediction for bulk analysis (up to 1000 emails).
+- Request/response timing middleware.
+- Graceful error handling with detailed error messages.
 
 ## Project structure
 - backend/: FastAPI service, ML pipeline, tests
@@ -108,8 +104,27 @@ Update this section after training with the selected dataset.
 - Accuracy, Precision, Recall, F1, ROC-AUC
 - Confusion matrix
 
-## Future improvements
-- Rate limiting and auth
-- Email header parser and .eml uploads
-- Model versioning and registry
-- SHAP explanations in UI charts
+## Testing
+
+Comprehensive test coverage with pytest and Vitest:
+
+**Backend Tests**: Feature extraction, model inference, API endpoints, error handling.
+**Frontend Tests**: Component rendering, user interactions, error states.
+
+Run tests: `pytest backend/tests -v` and `npm test` (frontend).
+See [TESTING.md](TESTING.md) for full instructions.
+
+## CI/CD Pipeline
+
+GitHub Actions workflow (`.github/workflows/ci.yml`):
+- Backend tests with coverage
+- Code linting (Black, Ruff, ESLint)
+- Docker image builds
+
+## Future Improvements
+- Rate limiting and authentication
+- Email header parser and .eml file uploads
+- Model versioning and A/B testing
+- SHAP explainability visualization in UI
+- Prediction history database
+- Admin dashboard with metrics

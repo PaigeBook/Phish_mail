@@ -11,6 +11,7 @@ from app.utils.text import clean_text
 
 
 def _risk_level(score: float) -> str:
+    """Map prediction score to risk level (Low/Medium/High)."""
     if score < RISK_LOW_MAX:
         return "Low"
     if score < RISK_MED_MAX:
@@ -19,12 +20,16 @@ def _risk_level(score: float) -> str:
 
 
 def _combine_text(body: str, headers: str | None) -> str:
+    """Combine email headers and body for analysis."""
     if headers:
         return f"{headers}\n\n{body}"
     return body
 
 
-def _top_linear_features(model: Any, feature_names: list[str], X_row) -> list[dict]:
+def _top_linear_features(model: Any, feature_names: list[str], X_row: Any) -> list[dict]:
+    """Extract top contributing features from linear model."""
+    if not hasattr(model, "coef_"):
+        return []
     coef = model.coef_[0]
     contrib = X_row.toarray().ravel() * coef
     top_idx = np.argsort(contrib)[-5:][::-1]
@@ -37,6 +42,7 @@ def _top_linear_features(model: Any, feature_names: list[str], X_row) -> list[di
 
 
 def _get_feature_names(pipeline: Any) -> list[str]:
+    """Extract feature names from sklearn pipeline."""
     features = pipeline.named_steps.get("features")
     if not features:
         return []
@@ -48,6 +54,15 @@ def _get_feature_names(pipeline: Any) -> list[str]:
 
 
 def predict_email(body: str, headers: str | None) -> dict:
+    """Predict phishing likelihood for an email with explainability.
+    
+    Args:
+        body: Email body text
+        headers: Optional raw email headers
+        
+    Returns:
+        Dictionary with prediction, confidence, risk_level, and explanation
+    """
     model = load_model()
     meta = load_model_meta()
 
