@@ -1,6 +1,5 @@
 import json
 import os
-from pathlib import Path
 
 import joblib
 import pytest
@@ -54,9 +53,7 @@ def mock_model(tmp_path):
             {
                 "best_model": "logistic_regression",
                 "trained_at": "2026-02-25T10:00:00",
-                "metrics": {
-                    "logistic_regression": {"accuracy": 0.95, "f1": 0.94}
-                },
+                "metrics": {"logistic_regression": {"accuracy": 0.95, "f1": 0.94}},
             }
         ),
         encoding="utf-8",

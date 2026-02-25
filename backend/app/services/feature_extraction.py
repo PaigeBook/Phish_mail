@@ -1,5 +1,5 @@
 import re
-from typing import Iterable
+from collections.abc import Iterable
 
 import numpy as np
 from sklearn.base import BaseEstimator, TransformerMixin
@@ -16,7 +16,7 @@ _HEADER_RE = re.compile(r"(reply-to:|return-path:)", re.IGNORECASE)
 
 class EngineeredFeatures(BaseEstimator, TransformerMixin):
     """Extract engineered features from email text for phishing detection.
-    
+
     Computes 6 features per email:
     - keyword_freq: Ratio of suspicious keywords to words
     - url_count: Number of URLs found
@@ -29,15 +29,17 @@ class EngineeredFeatures(BaseEstimator, TransformerMixin):
     def __init__(self) -> None:
         """Initialize transformer with pre-compiled regex patterns."""
 
-    def fit(self, X: Iterable[str], y: Iterable[int] | None = None) -> "EngineeredFeatures":
+    def fit(
+        self, X: Iterable[str], y: Iterable[int] | None = None
+    ) -> "EngineeredFeatures":
         return self
 
     def transform(self, X: Iterable[str]) -> np.ndarray:
         """Transform raw email text into engineered feature vectors.
-        
+
         Args:
             X: Iterable of raw email text strings
-            
+
         Returns:
             NumPy array of shape (n_samples, 6) with computed features
         """

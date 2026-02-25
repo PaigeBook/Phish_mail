@@ -26,7 +26,9 @@ def _combine_text(body: str, headers: str | None) -> str:
     return body
 
 
-def _top_linear_features(model: Any, feature_names: list[str], X_row: Any) -> list[dict]:
+def _top_linear_features(
+    model: Any, feature_names: list[str], X_row: Any
+) -> list[dict]:
     """Extract top contributing features from linear model."""
     if not hasattr(model, "coef_"):
         return []
@@ -55,11 +57,11 @@ def _get_feature_names(pipeline: Any) -> list[str]:
 
 def predict_email(body: str, headers: str | None) -> dict:
     """Predict phishing likelihood for an email with explainability.
-    
+
     Args:
         body: Email body text
         headers: Optional raw email headers
-        
+
     Returns:
         Dictionary with prediction, confidence, risk_level, and explanation
     """
@@ -95,7 +97,9 @@ def predict_email(body: str, headers: str | None) -> dict:
 
     engineered = EngineeredFeatures()
     engineered_values = engineered.transform([cleaned])[0]
-    engineered_stats = dict(zip(engineered.get_feature_names_out(), engineered_values))
+    engineered_stats = dict(
+        zip(engineered.get_feature_names_out(), engineered_values, strict=False)
+    )
 
     explanation = {
         "reasons": reasons or ["Model confidence based on learned patterns"],

@@ -24,8 +24,11 @@ dev = [
 [tool.black]
 line-length = 88
 
+
 [tool.ruff]
 line-length = 88
+
+[tool.ruff.lint]
 select = ["E", "F", "I", "B", "UP"]
 
 [tool.ruff.format]

@@ -42,9 +42,7 @@ def _train_dummy_model(model_path: Path, meta_path: Path) -> None:
     pipeline.fit(X, y)
 
     joblib.dump(pipeline, model_path)
-    meta_path.write_text(
-        json.dumps({"feature_names": []}, indent=2), encoding="utf-8"
-    )
+    meta_path.write_text(json.dumps({"feature_names": []}, indent=2), encoding="utf-8")
 
 
 def test_predict_endpoint(tmp_path):

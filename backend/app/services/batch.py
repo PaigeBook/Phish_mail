@@ -1,6 +1,5 @@
 import logging
 import uuid
-from typing import Any
 
 from app.services.inference import predict_email
 
@@ -9,10 +8,10 @@ logger = logging.getLogger(__name__)
 
 def batch_predict(emails: list[dict]) -> tuple[list[dict], str]:
     """Process multiple emails with graceful error handling per email.
-    
+
     Args:
         emails: List of dicts with 'body' and optional 'headers' keys
-        
+
     Returns:
         Tuple of (predictions list, batch_id str)
     """
@@ -47,7 +46,7 @@ def batch_predict(emails: list[dict]) -> tuple[list[dict], str]:
                     "error": str(exc),
                 }
             )
-        except Exception as exc:
+        except Exception:
             logger.exception("Unexpected error during batch prediction")
             predictions.append(
                 {

@@ -8,13 +8,13 @@ logger = logging.getLogger(__name__)
 
 def get_health() -> dict[str, Any]:
     """Get comprehensive health status including model metadata.
-    
+
     Returns:
         Dictionary with status, model metadata, and version info.
         Returns 'degraded' status if model cannot be loaded.
     """
     try:
-        model = load_model()
+        load_model()
         meta = load_model_meta()
         model_loaded = True
         model_name = meta.get("best_model")

@@ -5,6 +5,7 @@ from pydantic import BaseModel, Field, field_validator
 
 class PredictRequest(BaseModel):
     """Request model for single email prediction."""
+
     body: str = Field(..., min_length=1, description="Raw email body")
     headers: str | None = Field(None, description="Optional raw email headers")
 
@@ -19,12 +20,14 @@ class PredictRequest(BaseModel):
 
 class FeatureContribution(BaseModel):
     """Model feature contribution for explainability."""
+
     feature: str
     contribution: float
 
 
 class Explanation(BaseModel):
     """Prediction explanation with reasons, features, and detected terms."""
+
     reasons: list[str]
     top_features: list[FeatureContribution]
     suspicious_terms: list[str]
@@ -33,6 +36,7 @@ class Explanation(BaseModel):
 
 class PredictResponse(BaseModel):
     """Response model for email prediction."""
+
     prediction: str
     confidence: float
     risk_level: str
