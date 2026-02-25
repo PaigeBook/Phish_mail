@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+.venv/
+.env
+.env.*
+
+# Kaggle
+.kaggle/
+kaggle.json
+
+# ML artifacts
+backend/models/*.joblib
+backend/models/*.json
+backend/models/*.pkl
+backend/data/
+backend/data/*.csv
+
+# Node
+node_modules/
+.next/
+dist/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
