@@ -25,7 +25,7 @@ export default function HighlightText({
           return <span key={idx}>{part}</span>;
         }
         return (
-          <mark key={idx} className="rounded bg-alert/15 px-1 text-alert">
+          <mark key={idx} className="rounded bg-gradient-to-r from-coral/25 to-orange/25 px-1.5 py-0.5 text-coral font-semibold">
             {part}
           </mark>
         );

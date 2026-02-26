@@ -9,8 +9,8 @@ const headingFont = Space_Grotesk({ subsets: ["latin"], weight: ["400", "600"] }
 const bodyFont = IBM_Plex_Sans({ subsets: ["latin"], weight: ["300", "400", "600"] });
 
 export const metadata = {
-  title: "Phishing Email Detector",
-  description: "Security-focused phishing email analysis dashboard"
+  title: "🐠 Safe Harbor - Phishing Email Detector",
+  description: "Keep your inbox safe from phishing nets with AI-powered protection"
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
