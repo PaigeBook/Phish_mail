@@ -11,6 +11,7 @@ from sklearn.pipeline import FeatureUnion, Pipeline
 
 from app.services.feature_extraction import EngineeredFeatures
 from app.services.model_registry import load_model, load_model_meta
+from app.utils.settings import get_settings
 
 
 @pytest.fixture
@@ -67,6 +68,7 @@ def mock_model_path(tmp_path):
     os.environ["BACKEND_MODEL_META_PATH"] = str(meta_path)
 
     # Clear caches
+    get_settings.cache_clear()
     load_model.cache_clear()
     load_model_meta.cache_clear()
 
@@ -84,5 +86,6 @@ def mock_model_path(tmp_path):
         os.environ.pop("BACKEND_MODEL_META_PATH", None)
 
     # Clear caches again
+    get_settings.cache_clear()
     load_model.cache_clear()
     load_model_meta.cache_clear()
