@@ -14,6 +14,18 @@ from app.services.model_registry import load_model, load_model_meta
 from app.utils.settings import get_settings
 
 
+@pytest.fixture(autouse=True)
+def clear_caches_before_test():
+    """Clear all service caches before each test to prevent stale caches."""
+    get_settings.cache_clear()
+    load_model.cache_clear()
+    load_model_meta.cache_clear()
+    yield
+    get_settings.cache_clear()
+    load_model.cache_clear()
+    load_model_meta.cache_clear()
+
+
 @pytest.fixture
 def mock_model_path(tmp_path):
     """Create and setup a mock model for testing."""
